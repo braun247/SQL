@@ -1,0 +1,100 @@
+https://www.w3resource.com/sql-exercises/joins-hr/index.php
+
+/*
+1. Write a query in SQL to display the first name, last name, 
+department number, and department name for each employee.
+*/
+select e.FIRST_NAME, e.LAST_NAME, e.DEPARTMENT_ID, d.DEPARTMENT_NAME
+from EMPLOYEES e join DEPARTMENTS d on e.DEPARTMENT_ID=d.DEPARTMENT_ID;
+
+/*
+2. Write a query in SQL to display the first and last name, department, 
+city, and state province for each employee.
+*/
+
+select e.FIRST_NAME, e.LAST_NAME, d.DEPARTMENT_NAME, l.CITY, l.STATE_PROVINCE
+from EMPLOYEES e JOIN departments d
+   on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+   join LOCATIONS l on d.LOCATION_ID=l.LOCATION_ID;
+
+/*
+3. Write a query in SQL to display the first name, last name, salary, 
+and job grade for all employees. 
+*/
+select e.FIRST_NAME, e.LAST_NAME, e.SALARY, j.GRADE_LEVEL
+from EMPLOYEES e join JOB_GRADES j on e.SALARY 
+  between j.LOWEST_SAL and j.HIGHEST_SAL
+order by 4 desc;
+
+/*
+4. Write a query in SQL to display the first name, last name, 
+department number and department name, for all employees for departments 80 or 40. 
+*/
+select e.FIRST_NAME, e.LAST_NAME, e.DEPARTMENT_ID, d.DEPARTMENT_NAME
+from EMPLOYEES e JOIN departments d on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+where e.DEPARTMENT_ID in (80,40);
+
+/*
+5. Write a query in SQL to display those employees who contain a letter z to 
+their first name and also display their last name, department, city, and state province.
+*/
+select e.FIRST_NAME, e.LAST_NAME, d.DEPARTMENT_NAME, l.CITY, l.STATE_PROVINCE
+from EMPLOYEES e JOIN departments d
+   on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+   join LOCATIONS l on d.LOCATION_ID=l.LOCATION_ID
+where lower(e.first_name) like '%z%';
+
+/*
+6. Write a query in SQL to display all departments including those where 
+does not have any employee. 
+*/
+select e.*, d.DEPARTMENT_NAME
+from EMPLOYEES e right join DEPARTMENTS d
+on e.DEPARTMENT_ID=d.DEPARTMENT_ID;
+
+/*
+7. Write a query in SQL to display the first and last name and salary 
+for those employees who earn less than the employee earn whose number is 182. 
+*/
+
+select e.FIRST_NAME, e.LAST_NAME, e.SALARY
+from EMPLOYEES e join EMPLOYEES s 
+  on e.SALARY < s.SALARY
+  and s.EMPLOYEE_ID=182
+order by 3;
+  
+--or without  the join
+  
+select FIRST_NAME, LAST_NAME, SALARY
+from EMPLOYEES
+where salary < (
+  select salary from EMPLOYEES where EMPLOYEE_ID=182);
+
+/*
+8. Write a query in SQL to display the first name of all employees 
+including the first name of their manager.
+*/
+select d.DEPARTMENT_NAME, l.CITY, l.STATE_PROVINCE
+from departments d join locations l
+on d.LOCATION_ID=l.LOCATION_ID;
+
+/*
+10. Write a query in SQL to display the first name, last name, 
+department number and name, for all employees who have or have not any department. 
+*/
+select e.FIRST_NAME, e.LAST_NAME, e.DEPARTMENT_ID, d.DEPARTMENT_NAME
+from EMPLOYEES e left JOIN departments d 
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID;
+
+/*
+11. Write a query in SQL to display the first name of all employees and 
+the first name of their manager including those who does not working under any manager.
+*/
+select e.FIRST_NAME || ' ' || e.LAST_NAME EMP, m.FIRST_NAME || ' ' || m.LAST_NAME manager
+from EMPLOYEES e left join EMPLOYEES m
+  on e.MANAGER_ID=m.EMPLOYEE_ID;
+
+/*
+12. Write a query in SQL to display the first name, last name, and department number for 
+those employees who works in the same department as the employee who holds the last name as Taylor.
+*/
