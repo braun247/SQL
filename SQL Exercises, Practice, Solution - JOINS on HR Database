@@ -98,3 +98,86 @@ from EMPLOYEES e left join EMPLOYEES m
 12. Write a query in SQL to display the first name, last name, and department number for 
 those employees who works in the same department as the employee who holds the last name as Taylor.
 */
+select e.FIRST_NAME, e.LAST_NAME, e.DEPARTMENT_ID
+from EMPLOYEES e join EMPLOYEES t 
+  on e.DEPARTMENT_ID=t.DEPARTMENT_ID 
+  and t.LAST_NAME='Taylor';
+  
+ /*
+13. Write a query in SQL to display the job title, department name, full name 
+(first and last name ) of employee, and starting date for all the jobs which 
+started on or after 1st January, 1993 and ending with on or before 31 August, 1997.
+*/
+select j.JOB_TITLE, d.DEPARTMENT_NAME, e.FIRST_NAME ||' '|| e.LAST_NAME, h.START_DATE
+from EMPLOYEES e join DEPARTMENTS d 
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+join JOB_HISTORY h 
+  on e.EMPLOYEE_ID=h.EMPLOYEE_ID
+join JOBS j 
+  on j.JOB_ID=h.JOB_ID
+join DEPARTMENTS d 
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+where h.START_DATE>='01-JAN-93'
+  and h.END_DATE<='31-AUG-97';
+  
+/*
+14. Write a query in SQL to display job title, full name (first and last name ) 
+of employee, and the difference between maximum salary for the job and salary of the employee.
+*/
+select j.JOB_TITLE, e.FIRST_NAME ||' '|| e.LAST_NAME name, j.MAX_SALARY-e.SALARY diff_in_sal
+from EMPLOYEES e join jobs j
+  on e.JOB_ID=j.JOB_ID;
+  
+/*
+15. Write a query in SQL to display the name of the department, average salary and 
+number of employees working in that department who got commission.
+*/
+select d.DEPARTMENT_NAME, trunc(avg(e.SALARY), 2) avg_salary, COUNT(e.COMMISSION_PCT) num_of_commsh
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+group by d.DEPARTMENT_NAME
+order by 2;
+
+/*
+16. Write a query in SQL to display the full name (first and last name ) of employees, job title and 
+the salary differences to their own job for those employees who is working in the department ID 80.
+*/
+select e.FIRST_NAME ||' '|| e.LAST_NAME name, j.JOB_TITLE, j.MAX_SALARY-e.SALARY sal_diff
+from EMPLOYEES e join JOBS j
+  on e.JOB_ID=j.JOB_ID
+where e.DEPARTMENT_ID=80;
+
+/*
+17. Write a query in SQL to display the name of the country, city, and the 
+departments which are running there.
+*/
+select c.COUNTRY_NAME, l.STATE_PROVINCE, d.DEPARTMENT_NAME
+from COUNTRIES c join LOCATIONS l
+  on c.COUNTRY_ID = l.COUNTRY_ID
+join DEPARTMENTS d
+  on d.LOCATION_ID=l.LOCATION_ID;
+  
+ /*
+18. Write a query in SQL to display department name and the full name 
+(first and last name) of the manager.
+*/
+select d.DEPARTMENT_NAME, e.FIRST_NAME ||' '|| e.LAST_NAME manager_of_dept
+from EMPLOYEES e join DEPARTMENTS d 
+  on e.EMPLOYEE_ID=d.MANAGER_ID;
+  
+ /*
+19. Write a query in SQL to display job title and average salary of employees.
+*/
+select j.JOB_TITLE, trunc(avg(e.SALARY), 2) avg_sal
+from EMPLOYEES e join jobs j
+  on e.JOB_ID=j.JOB_ID
+group by j.JOB_TITLE;
+
+/*
+20. Write a query in SQL to display the details of jobs which was done by any 
+of the employees who is presently earning a salary on and above 12000.
+*/
+select h.*
+from EMPLOYEES e join JOB_HISTORY h
+  on e.EMPLOYEE_ID=h.EMPLOYEE_ID
+where e.SALARY>12000;
