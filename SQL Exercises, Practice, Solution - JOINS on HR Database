@@ -181,3 +181,5 @@ select h.*
 from EMPLOYEES e join JOB_HISTORY h
   on e.EMPLOYEE_ID=h.EMPLOYEE_ID
 where e.SALARY>12000;
+
+
