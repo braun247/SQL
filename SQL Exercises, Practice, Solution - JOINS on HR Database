@@ -182,4 +182,23 @@ from EMPLOYEES e join JOB_HISTORY h
   on e.EMPLOYEE_ID=h.EMPLOYEE_ID
 where e.SALARY>12000;
 
+/*
+21.Write a query in SQL to display the country name, city, and number of 
+those departments where at leaste 2 employees are working.
+*/
 
+select c.COUNTRY_NAME, l.CITY, count(d.DEPARTMENT_ID)
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+join LOCATIONS l 
+  on d.LOCATION_ID=l.LOCATION_ID
+join COUNTRIES c 
+  on l.COUNTRY_ID=c.COUNTRY_ID
+where 
+group by c.COUNTRY_NAME, l.CITY;
+
+select d.DEPARTMENT_ID, count(e.EMPLOYEE_ID)
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+group by d.DEPARTMENT_ID
+having count(e.EMPLOYEE_ID)>2;
