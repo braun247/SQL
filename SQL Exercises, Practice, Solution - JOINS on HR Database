@@ -199,3 +199,17 @@ where d.DEPARTMENT_ID in (
     having count(DEPARTMENT_ID)>=2
   )
 group by c.COUNTRY_NAME, l.CITY;
+
+/*
+22. Write a query in SQL to display the department name, 
+full name (first and last name) of manager, and their city.
+*/
+select d.DEPARTMENT_NAME, e.FIRST_NAME || ' ' || e.LAST_NAME man_name, l.CITY
+from EMPLOYEES e join EMPLOYEES m
+  on m.MANAGER_ID=e.EMPLOYEE_ID
+join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+join locations l
+  on d.LOCATION_ID=l.LOCATION_ID;
+  
+ 
