@@ -229,3 +229,22 @@ where h.DEPARTMENT_ID=80;
 select EMPLOYEE_ID, JOB_TITLE, END_DATE-START_DATE
 from JOBS join JOB_HISTORY using(JOB_ID)
 where DEPARTMENT_ID=80;
+
+/*
+24. Write a query in SQL to display the full name (first and last name), and 
+salary of those employees who working in any department located in London.
+*/
+
+select e.FIRST_NAME || ' ' || e.LAST_NAME, e.SALARY
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+join LOCATIONS l 
+  on d.LOCATION_ID=l.LOCATION_ID
+where lower(l.CITY)='london';
+
+select FIRST_NAME || ' ' || LAST_NAME, SALARY
+from EMPLOYEES  join DEPARTMENTS 
+  using(DEPARTMENT_ID)
+join LOCATIONS 
+  using(LOCATION_ID)
+where lower(CITY)='london';
