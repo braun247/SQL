@@ -212,4 +212,20 @@ join DEPARTMENTS d
 join locations l
   on d.LOCATION_ID=l.LOCATION_ID;
   
- 
+/*
+23. Write a query in SQL to display the employee ID, job name, number of 
+days worked in for all those jobs in department 80. 
+*/
+
+select h.EMPLOYEE_ID, j.JOB_TITLE, h.END_DATE-h.START_DATE
+from JOBS j join JOB_HISTORY h
+on j.JOB_ID=h.JOB_ID
+where h.DEPARTMENT_ID=80;
+
+select h.EMPLOYEE_ID, j.JOB_TITLE, h.END_DATE-h.START_DATE
+from JOBS j natural join JOB_HISTORY h
+where h.DEPARTMENT_ID=80;
+
+select EMPLOYEE_ID, JOB_TITLE, END_DATE-START_DATE
+from JOBS join JOB_HISTORY using(JOB_ID)
+where DEPARTMENT_ID=80;
