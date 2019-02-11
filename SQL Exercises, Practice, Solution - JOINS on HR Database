@@ -256,9 +256,9 @@ job title, starting and ending date of last jobs for those employees
 with worked without a commission percentage. 
 */
 
-select e.FIRST_NAME || ' ' || e.LAST_NAME, j.JOB_TITLE, h.*
+select e.FIRST_NAME || ' ' || e.LAST_NAME, j.JOB_TITLE, h.sdate, h.edate
 from EMPLOYEES e join 
-    (select employee_id, max(start_date), max(end_date)
+    (select employee_id, max(start_date) sdate, max(end_date) edate
      from job_history
      group by employee_id
      ) h
