@@ -266,3 +266,13 @@ from EMPLOYEES e join
 join JOBS j
   on e.JOB_ID=j.JOB_ID
 where nvl(e.COMMISSION_PCT, 0) = 0;
+
+/*
+26. Write a query in SQL to display the department name and number of employees 
+in each of the department.
+*/
+
+select d.DEPARTMENT_NAME, count(e.EMPLOYEE_ID) emp_count 
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+group by d.DEPARTMENT_NAME;
