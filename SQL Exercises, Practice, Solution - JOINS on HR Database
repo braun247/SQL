@@ -276,3 +276,24 @@ select d.DEPARTMENT_NAME, count(e.EMPLOYEE_ID) emp_count
 from EMPLOYEES e join DEPARTMENTS d
   on e.DEPARTMENT_ID=d.DEPARTMENT_ID
 group by d.DEPARTMENT_NAME;
+
+/*
+27. Write a query in SQL to display the full name (firt and last name ) of 
+employee with ID and name of the country presently where (s)he is working.  
+*/
+
+select e.FIRST_NAME || ' ' || e.LAST_NAME, e.EMPLOYEE_ID, c.COUNTRY_NAME
+from EMPLOYEES e join DEPARTMENTS d
+  on e.DEPARTMENT_ID=d.DEPARTMENT_ID
+join LOCATIONS l
+  on d.LOCATION_ID=l.LOCATION_ID
+join COUNTRIES c 
+  on l.COUNTRY_ID=c.COUNTRY_ID;
+  
+select FIRST_NAME || ' ' || LAST_NAME, EMPLOYEE_ID, COUNTRY_NAME
+from EMPLOYEES join DEPARTMENTS
+  using(DEPARTMENT_ID)
+join LOCATIONS 
+  using(LOCATION_ID)
+join COUNTRIES 
+  using(COUNTRY_ID);
